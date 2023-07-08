@@ -7,10 +7,10 @@ public class PlayerCombat : MonoBehaviour
 {
 	public Animator animator;
 
-    public float attackRange = 0.2f;
+	public float attackRange = 0.2f;
 
 
-    public LayerMask enemyLayers;
+	public LayerMask enemyLayers;
 	public int attackDamage = 20;
 
 	public KnightMovement player;
@@ -23,30 +23,29 @@ public class PlayerCombat : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.J))
 		{
-			Attack();
+			//play an attack animation
+			animator.SetTrigger("Attack");
+
 		}
 	}
 	void Attack()
 	{
-		//play an attack animation
-		animator.SetTrigger("Attack");
-
 		// Detect enemies in range of attack
-		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(player.attackPoint.position, attackRange,enemyLayers);
+		Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(player.attackPoint.position, attackRange, enemyLayers);
 
 		//Damage them 
-		foreach(Collider2D enemy in hitEnemies)
+		foreach (Collider2D enemy in hitEnemies)
 		{
 			enemy.GetComponent<EnemyController>().TakeDame(attackDamage);
 		}
 	}
 	private void OnDrawGizmosSelected()
 	{
-		if(player.attackPoint == null)
+		if (player.attackPoint == null)
 		{
 			return;
 		}
 		Gizmos.DrawWireSphere(player.attackPoint.position, attackRange);
 	}
-	
+
 }

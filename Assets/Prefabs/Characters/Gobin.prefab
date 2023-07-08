@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1305077508
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1305077509}
+  m_Layer: 6
+  m_Name: attackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1305077509
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305077508}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.959, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7744482216982416043}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7744482216982415959
 GameObject:
   m_ObjectHideFlags: 0
@@ -14,7 +45,7 @@ GameObject:
   - component: {fileID: 7744482216982415958}
   - component: {fileID: 7744482216982416042}
   - component: {fileID: 8178027257976623356}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Gobin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,7 +63,8 @@ Transform:
   m_LocalPosition: {x: -5.86, y: -3.43, z: -0.06679618}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1305077509}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -169,4 +201,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceWithTarget: 0
+  currentHealth: 0
+  maxHealth: 100
+  dir: {x: 0, y: 0, z: 0}
   moveSpeed: 1
+  enemyDmg: 20
+  animator: {fileID: 7744482216982416042}
+  attackRange: 0.2
+  PlayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  attackPoint: {fileID: 1305077509}
+  TimeBetweenAttack: 1
+  attackTime: 0

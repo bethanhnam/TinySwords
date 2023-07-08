@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -9,8 +10,12 @@ public class EnemyController : MonoBehaviour
 	[SerializeField] private float distanceWithTarget;
 	private bool isDetected = false;
 	private bool isAttacking = false;
-	
 
+	[SerializeField] private int currentHealth;
+	[SerializeField] private int maxHealth;
+
+	private Vector2 movement;
+	public Vector3 dir;
 	private Rigidbody2D rb;
 	[SerializeField] private float moveSpeed = 1f; // Tốc độ di chuyển của enemy
 	[SerializeField] public int enemyDmg = 20;
@@ -26,6 +31,7 @@ public class EnemyController : MonoBehaviour
 
 	private void Start()
 	{
+		currentHealth = maxHealth;
 		target = GameObject.FindGameObjectWithTag("Player");
 		rb = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
@@ -33,6 +39,10 @@ public class EnemyController : MonoBehaviour
 	private void Update()
 	{
 		distanceWithTarget = Vector3.Distance(target.transform.position, this.transform.position);
+		dir = target.transform.position - this.transform.position;
+		float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
+		dir.Normalize();
+		movement = dir;
 		if (distanceWithTarget < 5f)
 		{
 			isDetected = true;
@@ -44,45 +54,40 @@ public class EnemyController : MonoBehaviour
 	}
 	private void FixedUpdate()
 	{
-		if (isDetected && !isAttacking)
+		if (isDetected)
 		{
-			if (distanceWithTarget > 1.5f)
+			if (distanceWithTarget > 1.5f && !isAttacking)
 			{
-				MoveToTarget();
+				MoveToTarget(movement);
+				animator.SetBool("isMoving", true);
 			}
 			else
 			{
-					attackTime += Time.deltaTime;
-					if (attackTime > TimeBetweenAttack)
-					{
-						isAttacking = true;
-						animator.SetTrigger("Attack");
+				rb.velocity = Vector2.zero;
+				animator.SetBool("isMoving", false);
+				attackTime += Time.deltaTime;
+				if (attackTime > TimeBetweenAttack)
+				{
+					isAttacking = true;
+					animator.SetTrigger("Attack");
 
-					}
+				}
 
 			}
 		}
 	}
-	private void MoveToTarget()
+	private void MoveToTarget(Vector2 dir)
 	{
-		// Tính toán vị trí tiếp theo của enemy
-		Vector3 nextPosition = Vector3.MoveTowards(transform.position, new Vector3(target.transform.position.x - 1f, target.transform.position.y, 0), moveSpeed * Time.deltaTime);
-
-		// Di chuyển enemy đến vị trí tiếp theo
-		rb.MovePosition(nextPosition);
+		rb.MovePosition((Vector2)transform.position + (dir * moveSpeed * Time.deltaTime)); 
 	}
 	public void TakeDame(int dmg)
 	{
-		GameManager.Instance._enemyHealth.DmgUnit(dmg);
-		Debug.Log(GameManager.Instance._enemyHealth.Health);
-		if (GameManager.Instance._enemyHealth.Health <= 0)
+		currentHealth -= dmg;
+		Debug.Log(currentHealth + transform.name);
+		if (currentHealth <= 0)
 		{
 			Die();
 		}
-	}
-	public void TakeHeal(int helling)
-	{
-		GameManager.Instance._enemyHealth.HealthUnit(helling);
 	}
 	void Die()
 	{

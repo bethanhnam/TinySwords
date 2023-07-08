@@ -5,10 +5,12 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] HealBar _healthBar;
-    // Start is called before the first frame update
-    void Start()
+	[SerializeField] public int currentHealth;
+	[SerializeField] public int maxHealth;
+	// Start is called before the first frame update
+	void Start()
     {
-        
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -18,14 +20,14 @@ public class PlayerHealth : MonoBehaviour
 	}
     public void TakeDame(int dmg)
     {
-        GameManager.Instance._playerHealth.DmgUnit(dmg);
-        Debug.Log(GameManager.Instance._playerHealth.Health);
-        _healthBar.SetHealth(GameManager.Instance._playerHealth.Health);
+        currentHealth -= dmg;
+        Debug.Log(currentHealth);
+        _healthBar.SetHealth(currentHealth);
     }
 	public void TakeHeal(int helling)
 	{
-        GameManager.Instance._playerHealth.HealthUnit(helling);
-		Debug.Log(GameManager.Instance._playerHealth.Health);
-		_healthBar.SetHealth(GameManager.Instance._playerHealth.Health);
+        currentHealth += helling;
+		Debug.Log(currentHealth);
+		_healthBar.SetHealth(currentHealth);
 	}
 }

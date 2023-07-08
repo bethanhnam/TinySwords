@@ -66,11 +66,11 @@ public class KnightMovement : MonoBehaviour
 	{
 		if (isFlip)
 		{
-			attackPoint.localPosition = new Vector3(-0.45f, 0, 0);
+			attackPoint.localPosition = new Vector3(-0.6f, 0, 0);
 		}
 		if(!isFlip)
 		{
-			attackPoint.localPosition = new Vector3(0.45f, 0, 0);
+			attackPoint.localPosition = new Vector3(0.6f, 0, 0);
 		}
 	}
 }
