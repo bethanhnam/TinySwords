@@ -14,8 +14,6 @@ public class EnemyController : MonoBehaviour
 	[SerializeField] private int currentHealth;
 	[SerializeField] private int maxHealth;
 
-	private Vector2 movement;
-	public Vector3 dir;
 	private Rigidbody2D rb;
 	[SerializeField] private float moveSpeed = 1f; // Tốc độ di chuyển của enemy
 	[SerializeField] public int enemyDmg = 20;
@@ -27,7 +25,9 @@ public class EnemyController : MonoBehaviour
 	public Transform attackPoint;
 	[SerializeField] float TimeBetweenAttack = 1f;
 	[SerializeField] float attackTime = 0;
-	private float attackRangeY = 0.1f;
+
+	AttackPoint attackPoint1;
+	private bool canAttack;
 
 	private void Start()
 	{
@@ -35,14 +35,20 @@ public class EnemyController : MonoBehaviour
 		target = GameObject.FindGameObjectWithTag("Player");
 		rb = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
+		attackPoint1 = FindAnyObjectByType<AttackPoint>();
 	}
 	private void Update()
 	{
+		canAttack = attackPoint1.CanAttack();
 		distanceWithTarget = Vector3.Distance(target.transform.position, this.transform.position);
-		dir = target.transform.position - this.transform.position;
-		float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
-		dir.Normalize();
-		movement = dir;
+		if (transform.position.x < target.transform.position.x)
+		{
+			transform.localScale = new Vector3(1, 1, 1);
+		}
+		else
+		{
+			transform.localScale = new Vector3(-1, 1, 1);
+		}
 		if (distanceWithTarget < 5f)
 		{
 			isDetected = true;
@@ -50,35 +56,37 @@ public class EnemyController : MonoBehaviour
 		else
 		{
 			isDetected = false;
+			animator.SetBool("isMoving", false);
 		}
 	}
 	private void FixedUpdate()
 	{
 		if (isDetected)
 		{
-			if (distanceWithTarget > 1.5f && !isAttacking)
+			if (distanceWithTarget <= 1.5f && canAttack)
 			{
-				MoveToTarget(movement);
-				animator.SetBool("isMoving", true);
-			}
-			else
-			{
-				rb.velocity = Vector2.zero;
 				animator.SetBool("isMoving", false);
+				rb.velocity = Vector2.zero;
 				attackTime += Time.deltaTime;
 				if (attackTime > TimeBetweenAttack)
 				{
 					isAttacking = true;
 					animator.SetTrigger("Attack");
-
 				}
-
+			}
+			else 
+			{
+				MoveToTarget();
+				animator.SetBool("isMoving", true);
 			}
 		}
 	}
-	private void MoveToTarget(Vector2 dir)
+	private void MoveToTarget()
 	{
-		rb.MovePosition((Vector2)transform.position + (dir * moveSpeed * Time.deltaTime)); 
+		Vector3 nextPosition = Vector3.MoveTowards(transform.position, target.transform.position, moveSpeed * Time.deltaTime);
+
+		// Di chuyển enemy đến vị trí tiếp theo
+		rb.MovePosition(nextPosition);
 	}
 	public void TakeDame(int dmg)
 	{
@@ -113,6 +121,4 @@ public class EnemyController : MonoBehaviour
 		}
 		Gizmos.DrawWireSphere(attackPoint.position, attackRange);
 	}
-
-
 }
