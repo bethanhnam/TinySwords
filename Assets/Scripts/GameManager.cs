@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
 	public static GameManager Instance => instance;
 	public enum gameState { GameStarted ,GameOver,WinGame};
 	gameState state;
-	[SerializeField] private PlayerHealth player;
+	[SerializeField] private GameObject player;
+	[SerializeField] private PlayerHealth playerHealth;
 
 	private void Awake()
 	{
@@ -26,16 +27,17 @@ public class GameManager : MonoBehaviour
 	private void Start()
 	{
 		state = gameState.GameStarted;
-		player= FindFirstObjectByType<PlayerHealth>();
+		player = GameObject.Find("Knight");
+		playerHealth = player.GetComponentInChildren<PlayerHealth>();
 	}
 	private void Update()
 	{
-		if(player.currentHealth <= 0)
+		if(playerHealth.currentHealth <= 0)
 		{
 			state = gameState.GameOver;
 			GUIManager.Instance.gameOverPanel.SetActive(true);
 		}
-		if(player.currentHealth > 0)
+		if(playerHealth.currentHealth > 0)
 		{
 			if (state == gameState.WinGame)
 			{

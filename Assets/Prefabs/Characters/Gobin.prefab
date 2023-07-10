@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1305077509}
+  - component: {fileID: 345619529}
+  - component: {fileID: 345619528}
   m_Layer: 6
   m_Name: attackPoint
   m_TagString: Untagged
@@ -24,13 +26,41 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1305077508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.959, y: 0, z: 0}
+  m_LocalPosition: {x: 0.9, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7744482216982416043}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &345619529
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305077508}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0066110343, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.19589423
+--- !u!114 &345619528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305077508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839cfcba01f69b942b0e5e5931dd7d31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7744482216982415959
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,9 +71,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7744482216982416043}
   - component: {fileID: 7744482216982416040}
-  - component: {fileID: 7744482216982416041}
   - component: {fileID: 7744482216982415958}
   - component: {fileID: 7744482216982416042}
+  - component: {fileID: 1710852952}
   - component: {fileID: 8178027257976623356}
   m_Layer: 6
   m_Name: Gobin
@@ -120,32 +150,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &7744482216982416041
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7744482216982415959}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.09494454, y: -0.14496893}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.15625, y: 1.234375}
-    newSize: {x: 1.21875, y: 1.421875}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.5461694, y: 0.79784214}
-  m_EdgeRadius: 0
 --- !u!50 &7744482216982415958
 Rigidbody2D:
   serializedVersion: 4
@@ -188,6 +192,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!70 &1710852952
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7744482216982415959}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.1103341, y: -0.09278095}
+  m_Size: {x: 0.6346706, y: 0.94850945}
+  m_Direction: 0
 --- !u!114 &8178027257976623356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,10 +223,9 @@ MonoBehaviour:
   distanceWithTarget: 0
   currentHealth: 0
   maxHealth: 100
-  dir: {x: 0, y: 0, z: 0}
   moveSpeed: 1
   enemyDmg: 20
-  animator: {fileID: 7744482216982416042}
+  animator: {fileID: 0}
   attackRange: 0.2
   PlayerMask:
     serializedVersion: 2

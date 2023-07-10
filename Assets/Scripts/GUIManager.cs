@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GUIManager : MonoBehaviour
@@ -11,6 +12,8 @@ public class GUIManager : MonoBehaviour
 	public GameObject pausePanel;
 	public GameObject gameOverPanel;
 	public GameObject WinPanel;
+	public GameObject SelectionPanel;
+	public GameObject MainMenuPanel;
 
 
 	[SerializeField] private bool isOn = false;
@@ -36,5 +39,10 @@ public class GUIManager : MonoBehaviour
 	{
 		pausePanel.SetActive(false);
 		isOn = false;
+	}
+	public void PlayGame()
+	{
+		MainMenuPanel.SetActive(false);
+		SelectionPanel.SetActive(true);
 	}
 }

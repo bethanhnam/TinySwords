@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] HealBar _healthBar;
+    [SerializeField] protected HealBar _healthBar;
 	[SerializeField] public int currentHealth;
 	[SerializeField] public int maxHealth;
 	// Start is called before the first frame update
