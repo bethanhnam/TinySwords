@@ -14,6 +14,7 @@ public class GUIManager : MonoBehaviour
 	public GameObject WinPanel;
 	public GameObject SelectionPanel;
 	public GameObject MainMenuPanel;
+	public GameObject ShopPanel;
 
 
 	[SerializeField] private bool isOn = false;
@@ -44,5 +45,21 @@ public class GUIManager : MonoBehaviour
 	{
 		MainMenuPanel.SetActive(false);
 		SelectionPanel.SetActive(true);
+	}
+	public void OpenShopMenu()
+	{
+		pausePanel.SetActive(false);
+		Time.timeScale = 0;
+		ShopPanel.SetActive(true);
+	}
+	public void CloseShopMenu()
+	{
+		Time.timeScale = 1;
+		ShopPanel.SetActive(false);
+		isOn = false;
+	}
+	public void GoHome()
+	{
+		SceneManager.LoadScene("Menu");
 	}
 }

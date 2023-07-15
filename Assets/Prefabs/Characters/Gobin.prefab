@@ -220,6 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2244bfcf51d79944191dbc374907e896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinPrefab: {fileID: 2796652488901803014, guid: 2eb0b8880dabd0c4b8f38820c1cc250a, type: 3}
   distanceWithTarget: 0
   currentHealth: 0
   maxHealth: 100

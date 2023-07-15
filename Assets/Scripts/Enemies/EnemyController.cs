@@ -7,6 +7,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 public class EnemyController : MonoBehaviour
 {
 	private GameObject target;
+	public GameObject coinPrefab;
 	[SerializeField] private float distanceWithTarget;
 	private bool isDetected = false;
 	private bool isAttacking = false;
@@ -100,6 +101,7 @@ public class EnemyController : MonoBehaviour
 	void Die()
 	{
 		Destroy(gameObject);
+		Instantiate(coinPrefab, transform.position, Quaternion.identity);
 	}
 	public void Attack()
 	{
